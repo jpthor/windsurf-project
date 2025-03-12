@@ -2,6 +2,35 @@ import { elements } from './dom.js';
 import { GROK_API_KEY } from './config.js';
 import { currentFile } from './fileHandling.js';
 
+// Check Grok API connection status
+export async function checkGrokStatus() {
+    try {
+        const response = await fetch('https://api.x.ai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${GROK_API_KEY}`
+            },
+            body: JSON.stringify({
+                messages: [{ role: 'user', content: 'Test connection' }],
+                model: 'grok-2-latest',
+                stream: false,
+                temperature: 0
+            })
+        });
+
+        const isConnected = response.ok;
+        elements.grokStatusLight.classList.toggle('connected', isConnected);
+        elements.grokStatusText.textContent = `Grok ${isConnected ? 'Connected' : 'Disconnected'}`;
+        return isConnected;
+    } catch (error) {
+        console.error('Grok API connection check failed:', error);
+        elements.grokStatusLight.classList.remove('connected');
+        elements.grokStatusText.textContent = 'Grok Disconnected';
+        return false;
+    }
+}
+
 export let recognizedText = '';
 
 export async function performOCR() {

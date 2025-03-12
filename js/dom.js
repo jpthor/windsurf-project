@@ -18,5 +18,7 @@ export const elements = {
     qrModal: document.getElementById('qr-modal'),
     closeModal: document.querySelector('.close-modal'),
     qrCodeContainer: document.getElementById('qr-code-container'),
-    saveQrButton: document.getElementById('save-qr')
+    saveQrButton: document.getElementById('save-qr'),
+    grokStatusLight: document.getElementById('grok-status-light'),
+    grokStatusText: document.getElementById('grok-status-text')
 };

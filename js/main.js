@@ -2,7 +2,7 @@ import './init.js';
 import { elements } from './dom.js';
 import { showScreen } from './navigation.js';
 import { handleFileSelect } from './fileHandling.js';
-import { performOCR } from './ocr.js';
+import { performOCR, checkGrokStatus } from './ocr.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
 import { generateQRCode } from './qrcode.js';
 
@@ -38,5 +38,10 @@ elements.closeModal.addEventListener('click', () => {
     elements.qrModal.style.display = 'none';
 });
 
-// Load saved credentials on startup
-loadCredentials();
+// Initialize app
+async function initApp() {
+    loadCredentials();
+    await checkGrokStatus();
+}
+
+initApp();

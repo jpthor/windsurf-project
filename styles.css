@@ -51,6 +51,29 @@ body {
     padding: 2rem 1rem;
     text-align: center;
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.api-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: white;
+}
+
+.status-light {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ff4444;
+    transition: background-color 0.3s ease;
+}
+
+.status-light.connected {
+    background-color: #00C851;
 }
 
 .header h1 {
