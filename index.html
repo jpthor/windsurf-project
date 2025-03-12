@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>WiFi Scanner</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen active">
+            <header class="header">
+                <h1>WiFi Scanner</h1>
+            </header>
+            <main class="content">
+                <div class="card main-card">
+                    <h2>Select or take a photo of WiFi Credentials</h2>
+                    <button id="scan-button" class="scan-button">
+                        <span>SCAN</span>
+                    </button>
+                    <input type="file" id="file-input" accept="image/jpeg,image/png,image/heic,image/heif,application/pdf" hidden>
+                </div>
+            </main>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="review-screen" class="screen">
+            <header class="review-header">
+                <button id="back-button" class="back-button">&larr;</button>
+                <h2>Review Image</h2>
+            </header>
+            <main class="content">
+                <div class="card">
+                    <div id="image-preview-container" class="image-preview-container">
+                        <img id="image-preview" src="" alt="Preview">
+                    </div>
+                    <div class="file-info">
+                        <p id="file-name">No file selected</p>
+                        <p id="file-type">Supported: JPG, PNG, PDF, HEIC/HEIF</p>
+                    </div>
+                    <button id="continue-button" class="button primary-button">Continue</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Final Screen -->
+        <div id="final-screen" class="screen">
+            <header class="review-header">
+                <button id="back-to-review" class="back-button">&larr;</button>
+                <h2>Scan Results</h2>
+            </header>
+            <main class="content">
+                <div class="card">
+                    <h3>OCR Text</h3>
+                    <pre id="ocr-text" class="ocr-text">Processing...</pre>
+                    
+                    <h3>WiFi Credentials Found</h3>
+                    <div class="credential-fields">
+                        <div class="input-group">
+                            <label for="network-name">Network</label>
+                            <input type="text" id="network-name" placeholder="Network name">
+                        </div>
+                        <div class="input-group">
+                            <label for="network-password">Password</label>
+                            <input type="text" id="network-password" placeholder="Password">
+                        </div>
+                    </div>
+                    
+                    <button id="export-button" class="button primary-button">Export</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- QR Code Modal -->
+        <div id="qr-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>WiFi QR Code</h3>
+                <div id="qr-code-container" class="qr-code-container"></div>
+                <div class="modal-buttons">
+                    <button id="save-qr" class="button">Save to Camera Roll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load required libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('ServiceWorker registered'))
+                .catch(error => console.log('ServiceWorker registration failed:', error));
+        }
+    </script>
+</body>
+</html>
