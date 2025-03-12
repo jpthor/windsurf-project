@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2] - 2025-03-12
+### Changed
+- Made Grok status indicator persistent across all screens
+- Enhanced status indicator with blur effect and better visibility
+- Moved status indicator to fixed top-right position
+
 ## [1.1] - 2025-03-12
 ### Changed
 - Improved Grok integration: now tries Grok first when connected, falls back to regex

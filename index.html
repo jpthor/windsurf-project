@@ -45,6 +45,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
+        .fixed-status-bar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ccc;
+            transition: background-color 0.3s ease;
+        }
+
+        .status-light.connected {
+            background-color: #4CAF50;
+        }
+
         .version-info {
             position: fixed;
             bottom: 10px;
@@ -73,19 +103,24 @@
 </head>
 <body>
     <div class="app">
+        <!-- Fixed Status Bar -->
+        <div class="fixed-status-bar">
+            <div class="api-status">
+                <span id="grok-status-text">Grok</span>
+                <div id="grok-status-light" class="status-light"></div>
+            </div>
+        </div>
+
         <!-- Version Info -->
         <div class="version-info">
             <p>Made with <a href="https://windsurf.ai" target="_blank" rel="noopener">windsurf.ai</a></p>
-            <p>Version: 1.1 <span id="grok-model-info"></span></p>
+            <p>Version: 1.2 <span id="grok-model-info"></span></p>
         </div>
+
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
             <header class="header">
                 <h1>WiFi Scanner</h1>
-                <div class="api-status">
-                    <span id="grok-status-text">Grok</span>
-                    <div id="grok-status-light" class="status-light"></div>
-                </div>
             </header>
             <main class="content">
                 <div class="card main-card">

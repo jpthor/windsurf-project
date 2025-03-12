@@ -46,8 +46,16 @@ async function performGrokStatusCheck() {
         return isConnected;
     } catch (error) {
         console.error('Grok API connection check failed:', error);
+        isGrokConnected = false;
         elements.grokStatusLight.classList.remove('connected');
         elements.grokStatusText.textContent = 'Grok Disconnected';
+        
+        // Clear model info in footer
+        const modelInfo = document.getElementById('grok-model-info');
+        if (modelInfo) {
+            modelInfo.textContent = '';
+        }
+        
         return false;
     }
 }
