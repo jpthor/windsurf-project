@@ -1,7 +1,7 @@
 import './init.js';
 import { elements } from './dom.js';
 import { showScreen } from './navigation.js';
-import { handleFileSelect } from './fileHandling.js';
+import { handleFileSelect, initFileHandlers, currentFileData } from './fileHandling.js';
 import { performOCR } from './ocr.js';
 import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
@@ -16,21 +16,20 @@ elements.galleryButton.addEventListener('click', () => {
     elements.galleryInput.click();
 });
 
-// Initialize file handlers for both inputs
-elements.cameraInput.addEventListener('change', handleFileSelect);
-elements.galleryInput.addEventListener('change', handleFileSelect);
-
-elements.backButton.addEventListener('click', () => {
-    showScreen('home-screen');
-});
-
+// Handle review screen navigation
 elements.backToReviewButton.addEventListener('click', () => {
-    showScreen('review-screen');
+    if (currentFileData) {
+        elements.imagePreview.src = currentFileData;
+        showScreen('review-screen');
+    }
 });
 
+// Handle OCR and final screen
 elements.continueButton.addEventListener('click', () => {
-    showScreen('final-screen');
-    performOCR();
+    if (currentFileData) {
+        showScreen('final-screen');
+        performOCR();
+    }
 });
 
 // Save input values on typing
@@ -47,6 +46,7 @@ elements.closeModal.addEventListener('click', () => {
 
 // Initialize app
 async function initApp() {
+    initFileHandlers(); // Initialize file handling
     loadCredentials();
     await checkGrokStatus();
 }

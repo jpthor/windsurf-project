@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2] - 2025-03-12
+### Fixed
+- Image persistence between screens
+- Camera and gallery file handling
+- Screen navigation with active files
+- Back button behavior
+
 ## [1.4.1] - 2025-03-12
 ### Changed
 - Updated button design with light theme and dashed borders
