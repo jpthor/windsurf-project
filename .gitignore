@@ -1,6 +1,5 @@
 # Environment variables and sensitive configuration
 .env
-js/config.js
 
 # Dependency directories
 node_modules/
