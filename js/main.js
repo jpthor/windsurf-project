@@ -2,7 +2,8 @@ import './init.js';
 import { elements } from './dom.js';
 import { showScreen } from './navigation.js';
 import { handleFileSelect } from './fileHandling.js';
-import { performOCR, checkGrokStatus } from './ocr.js';
+import { performOCR } from './ocr.js';
+import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
 import { generateQRCode } from './qrcode.js';
 

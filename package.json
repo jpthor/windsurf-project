@@ -12,7 +12,9 @@
     "qrcode": "^1.5.3",
     "tesseract.js": "^5.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
@@ -24,5 +26,14 @@
     "image-processing"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "generate-icons.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpthor/windsurf-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jpthor/windsurf-project/issues"
+  },
+  "homepage": "https://github.com/jpthor/windsurf-project#readme"
 }
