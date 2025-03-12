@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.1] - 2025-03-12
+### Changed
+- Updated button design with light theme and dashed borders
+- Improved button contrast and readability
+- Enhanced icon styling for better visual harmony
+
+## [1.4.0] - 2025-03-12
+### Added
+- Separate camera and gallery buttons for better UX
+- Modern button design with icons and hover effects
+- Improved mobile responsiveness for button layout
+- Direct camera access for iOS devices
+
+## [1.3.2] - 2025-03-12
+### Changed
+- Enhanced social preview icon with larger size and cleaner design
+- Improved gradient background for better visual appeal
+- Optimized icon padding and dimensions
+
 ## [1.3.1] - 2025-03-12
 ### Fixed
 - Improved file input configuration for better mobile camera access

@@ -7,12 +7,18 @@ import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
 import { generateQRCode } from './qrcode.js';
 
-// Event Listeners
-elements.scanButton.addEventListener('click', () => {
-    elements.fileInput.click();
+// Event Listeners for Camera and Gallery
+elements.cameraButton.addEventListener('click', () => {
+    elements.cameraInput.click();
 });
 
-elements.fileInput.addEventListener('change', handleFileSelect);
+elements.galleryButton.addEventListener('click', () => {
+    elements.galleryInput.click();
+});
+
+// Initialize file handlers for both inputs
+elements.cameraInput.addEventListener('change', handleFileSelect);
+elements.galleryInput.addEventListener('change', handleFileSelect);
 
 elements.backButton.addEventListener('click', () => {
     showScreen('home-screen');

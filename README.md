@@ -2,7 +2,7 @@
 
 A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing.
 
-![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)
 [![Made with Windsurf](https://img.shields.io/badge/Made%20with-windsurf.ai-4e54c8.svg)](https://windsurf.ai)
 
 ## Features

@@ -50,15 +50,32 @@ const generateIcons = async () => {
             
             // For social preview, add padding and text
             if (name === 'social-preview.png') {
+                // Create a larger, cleaner preview with gradient background
                 await sharp(BASE_ICON)
-                    .resize(800, 800)
+                    .resize(900, 900) // Larger icon
                     .extend({
-                        top: 200,
-                        bottom: 200,
-                        left: 200,
-                        right: 200,
+                        top: 150,
+                        bottom: 150,
+                        left: 150,
+                        right: 150,
                         background: { r: 78, g: 84, b: 200, alpha: 1 } // #4e54c8
                     })
+                    .composite([
+                        {
+                            input: Buffer.from(`
+                                <svg>
+                                    <defs>
+                                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#4e54c8;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#8f94fb;stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect width="1200" height="1200" fill="url(#grad)" />
+                                </svg>
+                            `),
+                            blend: 'overlay'
+                        }
+                    ])
                     .toFile(outputPath);
             } else {
                 await sharp(BASE_ICON)
