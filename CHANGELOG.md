@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3] - 2025-03-12
+### Changed
+- Enhanced Grok status indicator with more subtle, translucent design
+- Improved blur effect and border styling for better visibility
+
 ## [1.2] - 2025-03-12
 ### Changed
 - Made Grok status indicator persistent across all screens
