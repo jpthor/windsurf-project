@@ -203,8 +203,23 @@
                             <span>Gallery</span>
                         </button>
                     </div>
-                    <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
-                    <input type="file" id="gallery-input" accept="image/*" hidden>
+                    <!-- Camera input - environment capture for rear camera -->
+                    <input 
+                        type="file" 
+                        id="camera-input" 
+                        accept="image/*" 
+                        capture="environment"
+                        aria-label="Take photo with camera"
+                        hidden
+                    >
+                    <!-- Gallery input - no capture attribute to allow gallery selection -->
+                    <input 
+                        type="file" 
+                        id="gallery-input" 
+                        accept="image/jpeg,image/png,image/heic,image/heif" 
+                        aria-label="Choose photo from gallery"
+                        hidden
+                    >
                 </div>
             </main>
         </div>
