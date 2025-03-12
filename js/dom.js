@@ -24,6 +24,7 @@ export const elements = {
     closeModal: document.querySelector('.close-modal'),
     qrCodeContainer: document.getElementById('qr-code-container'),
     saveQrButton: document.getElementById('save-qr'),
+    joinWifiButton: document.getElementById('join-wifi'),
     grokStatusLight: document.getElementById('grok-status-light'),
     grokStatusText: document.getElementById('grok-status-text')
 };

@@ -4,7 +4,7 @@ import { initFileHandlers, currentFileData } from './fileHandling.js';
 import { performOCR } from './ocr.js';
 import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
-import { generateQRCode } from './qrcode.js';
+import { generateQRCode, initWiFiHandlers } from './qrcode.js';
 
 // Handle review screen navigation
 elements.backToReviewButton.addEventListener('click', () => {
@@ -38,6 +38,7 @@ elements.closeModal.addEventListener('click', () => {
 async function initApp() {
     console.log('Initializing app...');
     initFileHandlers(); // Initialize file handling
+    initWiFiHandlers(); // Initialize WiFi functionality
     loadCredentials();
     await checkGrokStatus();
     console.log('App initialized');

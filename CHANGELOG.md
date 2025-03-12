@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.6] - 2025-03-12
+### Added
+- One-click WiFi network joining functionality
+- Improved QR code saving using native share API
+- Better mobile device compatibility
+
 ## [1.4.5] - 2025-03-12
 ### Fixed
 - Improved file handling with better error feedback
