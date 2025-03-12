@@ -1,5 +1,6 @@
 import { elements } from './dom.js';
 import { GROK_API_KEY } from './config.js';
+import { extractCredentialsWithRegex } from './regex-extractor.js';
 
 export { GROK_API_KEY };
 
@@ -48,8 +49,25 @@ export async function extractWifiCredentials(text) {
         return;
     }
 
+    // First try regex extraction as it's faster and doesn't require API calls
+    const regexCredentials = extractCredentialsWithRegex(text);
+    if (regexCredentials.network && regexCredentials.password) {
+        console.log('Credentials found using regex');
+        elements.networkName.value = regexCredentials.network;
+        elements.networkPassword.value = regexCredentials.password;
+        return regexCredentials;
+    }
+
+    // If regex fails and Grok is available, try Grok
+    if (!GROK_API_KEY) {
+        console.log('No Grok API key available, using regex results');
+        elements.networkName.value = regexCredentials.network || '';
+        elements.networkPassword.value = regexCredentials.password || '';
+        return regexCredentials;
+    }
+
     try {
-        console.log('Processing text:', text);
+        console.log('Processing text with Grok:', text);
 
         const requestBody = {
             messages: [
@@ -78,8 +96,10 @@ export async function extractWifiCredentials(text) {
         });
 
         if (!response.ok) {
-            const errorBody = await response.text();
-            throw new Error(`API request failed (${response.status}): ${errorBody}`);
+            console.log('Grok API failed, falling back to regex results');
+            elements.networkName.value = regexCredentials.network || '';
+            elements.networkPassword.value = regexCredentials.password || '';
+            return regexCredentials;
         }
 
         const data = await response.json();
@@ -87,14 +107,20 @@ export async function extractWifiCredentials(text) {
 
         const content = data.choices?.[0]?.message?.content;
         if (!content) {
-            throw new Error('Invalid API response structure');
+            console.log('Invalid Grok response, falling back to regex results');
+            elements.networkName.value = regexCredentials.network || '';
+            elements.networkPassword.value = regexCredentials.password || '';
+            return regexCredentials;
         }
 
         console.log('Raw content:', content);
         const credentials = JSON.parse(content);
 
         if (!credentials.network || !credentials.password) {
-            throw new Error('Missing required credentials in response');
+            console.log('Missing credentials in Grok response, falling back to regex results');
+            elements.networkName.value = regexCredentials.network || '';
+            elements.networkPassword.value = regexCredentials.password || '';
+            return regexCredentials;
         }
 
         elements.networkName.value = credentials.network;
@@ -104,12 +130,9 @@ export async function extractWifiCredentials(text) {
         return credentials;
 
     } catch (error) {
-        console.error('Credential extraction failed:', {
-            error: error.message,
-            rawResponse: error.message.includes('API') ? null : error
-        });
-        elements.networkName.value = '';
-        elements.networkPassword.value = '';
-        throw error;
+        console.error('Grok extraction failed, using regex results:', error);
+        elements.networkName.value = regexCredentials.network || '';
+        elements.networkPassword.value = regexCredentials.password || '';
+        return regexCredentials;
     }
 }
