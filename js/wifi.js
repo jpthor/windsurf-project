@@ -1,34 +1,37 @@
 // WiFi network handling functions
 
 /**
- * Join a WiFi network using the Web Network Information API
+ * Join a WiFi network using standard WiFi URL scheme
  * @param {string} ssid - Network name
  * @param {string} password - Network password
  */
 export async function joinWiFiNetwork(ssid, password) {
     try {
-        // Check if the Network Information API is available
-        if ('connection' in navigator && 'wifi' in navigator.connection) {
-            // Create WiFi credentials object
-            const credentials = {
-                ssid: ssid,
-                password: password,
-                networkType: 'wifi',
-                securityType: 'WPA'
-            };
-
-            // Request to join the network
-            await navigator.wifi?.connect(credentials);
-            return true;
+        // Show network details in a user-friendly way
+        const message = `Network Name: ${ssid}\nPassword: ${password}\n\nTo join this network:\n1. Open your WiFi settings (opening now...)\n2. Select "${ssid}"\n3. Enter the password shown above`;
+        
+        // Show the details first
+        alert(message);
+        
+        // Then open WiFi settings
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+        
+        if (isIOS) {
+            // Use iOS settings URL scheme
+            window.location.href = 'App-Prefs:root=WIFI';
+        } else if (isAndroid) {
+            // Use Android intent
+            window.location.href = 'intent://settings/wifi#Intent;scheme=android-settings;end';
         } else {
-            // Fallback for browsers that don't support the API
-            // Create a special URL that iOS/Android can handle
-            const wifiURL = `wifi://wifi.local/connect?ssid=${encodeURIComponent(ssid)}&password=${encodeURIComponent(password)}`;
-            window.location.href = wifiURL;
-            return true;
+            // For desktop, we've already shown the instructions
+            console.log('Desktop browser detected, instructions already shown');
         }
+        
+        return true;
     } catch (error) {
         console.error('Error joining WiFi:', error);
+        alert('Could not open WiFi settings. Please open them manually.');
         return false;
     }
 }
