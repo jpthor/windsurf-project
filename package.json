@@ -1,10 +1,28 @@
 {
-  "name": "wifi-qr-scanner",
+  "name": "wifi-qr-generator",
   "version": "1.0.0",
-  "description": "WiFi QR Code Scanner and Generator",
-  "main": "index.js",
-  "dependencies": {
-    "dotenv": "^16.4.1"
+  "description": "Extract WiFi credentials from images and generate QR codes for easy network sharing",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "dev": "python3 -m http.server 8080"
   },
-  "type": "module"
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "qrcode": "^1.5.3",
+    "tesseract.js": "^5.0.4"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "wifi",
+    "qr-code",
+    "ocr",
+    "ai",
+    "image-processing"
+  ],
+  "author": "",
+  "license": "MIT"
 }
