@@ -44,9 +44,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        .version-info {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            z-index: 100;
+            background: linear-gradient(to right, #4e54c8, #ff6b6b);
+            padding: 8px;
+        }
+        .version-info p {
+            margin: 2px 0;
+        }
+        .version-info a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .version-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="app">
+        <!-- Version Info -->
+        <div class="version-info">
+            <p>Made with <a href="https://windsurf.ai" target="_blank" rel="noopener">windsurf.ai</a></p>
+            <p>Version: 1.1 <span id="grok-model-info"></span></p>
+        </div>
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
             <header class="header">

@@ -2,6 +2,9 @@
 
 A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing.
 
+![Version](https://img.shields.io/badge/version-1.1-blue.svg)
+[![Made with Windsurf](https://img.shields.io/badge/Made%20with-windsurf.ai-4e54c8.svg)](https://windsurf.ai)
+
 ## Features
 
 - 📷 OCR-powered WiFi credential extraction from images
@@ -39,6 +42,10 @@ python3 -m http.server 8080
    - Process the text using AI to identify network name and password
    - Generate a QR code
 3. Scan the QR code with your phone to connect to the network
+
+## Version History
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ## Project Structure
 
