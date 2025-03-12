@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2025-03-12
+### Fixed
+- Improved file input configuration for better mobile camera access
+- Added Vercel deployment configuration with environment variable support
+- Updated documentation with detailed deployment instructions
+
 ## [1.3] - 2025-03-12
 ### Changed
 - Enhanced Grok status indicator with more subtle, translucent design

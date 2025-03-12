@@ -2,7 +2,7 @@
 
 A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing.
 
-![Version](https://img.shields.io/badge/version-1.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)
 [![Made with Windsurf](https://img.shields.io/badge/Made%20with-windsurf.ai-4e54c8.svg)](https://windsurf.ai)
 
 ## Features
@@ -16,15 +16,17 @@ A web-based tool that extracts WiFi credentials from images and generates QR cod
 
 ## Setup
 
+### Local Development
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
 cd wifi-qr-generator
 ```
 
-2. Create a `.env` file in the project root and add your Grok API key:
-```
-GROK_API_KEY=your_api_key_here
+2. Copy `js/config.template.js` to `js/config.js` and add your Grok API key:
+```javascript
+export const GROK_API_KEY = 'your_api_key_here';
 ```
 
 3. Start a local server:
@@ -32,7 +34,23 @@ GROK_API_KEY=your_api_key_here
 python3 -m http.server 8080
 ```
 
-5. Open `http://localhost:8080` in your browser
+4. Open `http://localhost:8080` in your browser
+
+### Vercel Deployment
+
+1. Push your code to GitHub
+
+2. Create a new project in Vercel and connect it to your GitHub repository
+
+3. Configure environment variables in Vercel:
+   - Go to Project Settings → Environment Variables
+   - Add `GROK_API_KEY` with your API key value
+   - Save and redeploy
+
+4. Important deployment notes:
+   - The app requires camera access for mobile devices
+   - Ensure your deployment is using HTTPS
+   - The Grok API key must be properly set in Vercel environment variables
 
 ## Usage
 
