@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.5] - 2025-03-12
+### Fixed
+- Improved file handling with better error feedback
+- Added validation for supported image formats
+- Added debug logging for troubleshooting
+- Fixed image preview not showing in review screen
+
+## [1.4.4] - 2025-03-12
+### Fixed
+- Environment detection for proper API key handling
+- Gallery picker now works correctly on local development
+- Explicit file type support (jpeg, png, heic, heif)
+- Improved mobile compatibility following deployment guide
+
 ## [1.4.2] - 2025-03-12
 ### Fixed
 - Image persistence between screens

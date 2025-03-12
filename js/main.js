@@ -1,20 +1,10 @@
-import './init.js';
 import { elements } from './dom.js';
 import { showScreen } from './navigation.js';
-import { handleFileSelect, initFileHandlers, currentFileData } from './fileHandling.js';
+import { initFileHandlers, currentFileData } from './fileHandling.js';
 import { performOCR } from './ocr.js';
 import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
 import { generateQRCode } from './qrcode.js';
-
-// Event Listeners for Camera and Gallery
-elements.cameraButton.addEventListener('click', () => {
-    elements.cameraInput.click();
-});
-
-elements.galleryButton.addEventListener('click', () => {
-    elements.galleryInput.click();
-});
 
 // Handle review screen navigation
 elements.backToReviewButton.addEventListener('click', () => {
@@ -46,9 +36,15 @@ elements.closeModal.addEventListener('click', () => {
 
 // Initialize app
 async function initApp() {
+    console.log('Initializing app...');
     initFileHandlers(); // Initialize file handling
     loadCredentials();
     await checkGrokStatus();
+    console.log('App initialized');
 }
 
-initApp();
+// Start the app when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, starting app...');
+    initApp();
+});

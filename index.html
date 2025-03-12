@@ -45,6 +45,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
+        /* File input styling */
+        input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
         .fixed-status-bar {
             position: fixed;
             top: 10px;
@@ -175,7 +187,7 @@
         <!-- Version Info -->
         <div class="version-info">
             <p>Made with <a href="https://windsurf.ai" target="_blank" rel="noopener">windsurf.ai</a></p>
-            <p>Version: 1.4.2 <span id="grok-model-info"></span></p>
+            <p>Version: 1.4.5 <span id="grok-model-info"></span></p>
         </div>
 
         <!-- Home Screen -->
@@ -203,22 +215,20 @@
                             <span>Gallery</span>
                         </button>
                     </div>
-                    <!-- Camera input - environment capture for rear camera -->
+                    <!-- Camera input with environment capture for rear camera -->
                     <input 
                         type="file" 
                         id="camera-input" 
                         accept="image/*" 
                         capture="environment"
                         aria-label="Take photo with camera"
-                        hidden
                     >
-                    <!-- Gallery input - no capture attribute to allow gallery selection -->
+                    <!-- Gallery input with broad image support -->
                     <input 
                         type="file" 
                         id="gallery-input" 
-                        accept="image/jpeg,image/png,image/heic,image/heif" 
+                        accept="image/*"
                         aria-label="Choose photo from gallery"
-                        hidden
                     >
                 </div>
             </main>

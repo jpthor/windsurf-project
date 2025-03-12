@@ -6,15 +6,41 @@ export let currentFileData = null;
 
 // Initialize event listeners for file inputs
 export function initFileHandlers() {
+    // Camera button click handler
+    elements.cameraButton.addEventListener('click', () => {
+        elements.cameraInput.click();
+    });
+
+    // Gallery button click handler
+    elements.galleryButton.addEventListener('click', () => {
+        elements.galleryInput.click();
+    });
+
+    // File selection handlers
     elements.cameraInput.addEventListener('change', handleFileSelect);
     elements.galleryInput.addEventListener('change', handleFileSelect);
+    
+    // Navigation handlers
     elements.backButton.addEventListener('click', handleBack);
+
+    console.log('File handlers initialized');
 }
 
 // Handle file selection from either camera or gallery
 export function handleFileSelect(event) {
+    console.log('File selection triggered');
+    
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+        console.warn('No file selected');
+        return;
+    }
+
+    console.log('File selected:', {
+        name: file.name,
+        type: file.type,
+        size: file.size
+    });
 
     currentFile = file;
     
@@ -24,14 +50,20 @@ export function handleFileSelect(event) {
     
     // Create image preview
     const reader = new FileReader();
+    
     reader.onload = (e) => {
-        currentFileData = e.target.result; // Store the file data
+        currentFileData = e.target.result;
         elements.imagePreview.src = currentFileData;
+        console.log('Image loaded, showing review screen');
         showScreen('review-screen');
     };
-    reader.readAsDataURL(file);
 
-    // Clear input value to allow selecting the same file again
+    reader.onerror = () => {
+        console.error('Error reading file');
+        alert('Error loading image. Please try again.');
+    };
+
+    reader.readAsDataURL(file);
     event.target.value = '';
 }
 
