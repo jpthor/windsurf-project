@@ -17,13 +17,25 @@ export async function checkGrokStatus() {
 
 // Actual status check implementation
 async function performGrokStatusCheck() {
+    console.log('Performing Grok status check with:', {
+        apiKeyExists: !!GROK_API_KEY,
+        apiKeyLength: GROK_API_KEY ? GROK_API_KEY.length : 0,
+        apiKeyPrefix: GROK_API_KEY ? GROK_API_KEY.substring(0, 4) : 'none'
+    });
+
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GROK_API_KEY}`
+        };
+        console.log('Request headers:', {
+            contentType: headers['Content-Type'],
+            authPrefix: headers.Authorization ? headers.Authorization.substring(0, 11) : 'none'
+        });
+
         const response = await fetch('https://api.x.ai/v1/chat/completions', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${GROK_API_KEY}`
-            },
+            headers,
             body: JSON.stringify({
                 messages: [{ role: 'user', content: 'Test connection' }],
                 model: 'grok-2-latest',
@@ -31,6 +43,23 @@ async function performGrokStatusCheck() {
                 temperature: 0
             })
         });
+
+        console.log('API Response:', {
+            status: response.status,
+            ok: response.ok,
+            statusText: response.statusText,
+            headers: Object.fromEntries(response.headers.entries())
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API Error Response:', {
+                status: response.status,
+                text: errorText,
+                parsed: tryParseJson(errorText)
+            });
+            throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        }
 
         const isConnected = response.ok;
         isGrokConnected = isConnected;
@@ -45,7 +74,11 @@ async function performGrokStatusCheck() {
         
         return isConnected;
     } catch (error) {
-        console.error('Grok API connection check failed:', error);
+        console.error('Grok API connection check failed:', {
+            error: error.toString(),
+            stack: error.stack,
+            message: error.message
+        });
         isGrokConnected = false;
         elements.grokStatusLight.classList.remove('connected');
         elements.grokStatusText.textContent = 'Grok Disconnected';
@@ -57,6 +90,15 @@ async function performGrokStatusCheck() {
         }
         
         return false;
+    }
+}
+
+// Helper function to safely parse JSON
+function tryParseJson(text) {
+    try {
+        return JSON.parse(text);
+    } catch (e) {
+        return { error: 'Failed to parse JSON', text };
     }
 }
 
@@ -100,7 +142,14 @@ export async function extractWifiCredentials(text) {
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed (${response.status})`);
+                const errorText = await response.text();
+                console.error('Grok API Error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: Object.fromEntries(response.headers.entries()),
+                    error: tryParseJson(errorText)
+                });
+                throw new Error(`API request failed (${response.status}): ${errorText}`);
             }
 
             elements.ocrText.textContent = 'Processing Grok response...';
