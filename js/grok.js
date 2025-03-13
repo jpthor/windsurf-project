@@ -1,8 +1,6 @@
 import { elements } from './dom.js';
-import { GROK_API_KEY } from './config.js';
+import { GROK_API_KEY } from './env.js';
 import { extractCredentialsWithRegex } from './regex-extractor.js';
-
-export { GROK_API_KEY };
 export let isGrokConnected = false;
 export const GROK_MODEL = 'grok-2-latest';
 

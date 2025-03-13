@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1] - 2025-03-13
+### Changed
+- Simplified environment variable handling into a single file
+- Improved local and Vercel environment detection
+- Removed redundant environment configuration files
+- Streamlined environment variable loading process
+
 ## [1.5.0] - 2025-03-13
 ### Changed
 - Updated environment variables to use REACT_APP_ prefix
