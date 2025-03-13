@@ -1,11 +1,10 @@
 {
-  "buildCommand": "./build.sh",
-  "outputDirectory": ".",
-  "framework": null,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "version": 2,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ],
+  "env": {
+    "REACT_APP_GROK_API_KEY": "@react_app_grok_api_key"
+  }
 }
