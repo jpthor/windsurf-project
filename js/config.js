@@ -1,10 +1,22 @@
-// Local development API key
-const LOCAL_API_KEY = 'xai-ecGtbkZB10eageFi3k1gI7la6rnaUcIO6TbztJdAvYdjXacJCiJVLpNc3Z81bcXEsWoEfO2bpl2jOC3u';
+/**
+ * Get environment variables in a way that works in both:
+ * 1. Local development (using .env file)
+ * 2. Vercel deployment (using environment variables)
+ */
+function getEnvVar(name) {
+    // For Vercel deployment
+    if (typeof process !== 'undefined' && process.env && process.env[name]) {
+        return process.env[name];
+    }
 
-// This handles both local development and Vercel deployment
-export const GROK_API_KEY = 
-    // Check if we're in a Node.js environment (Vercel)
-    typeof process !== 'undefined' && process.env.GROK_API_KEY
-        ? process.env.GROK_API_KEY
-        // Use local key for development
-        : LOCAL_API_KEY;
+    // For local development
+    if (typeof window !== 'undefined' && window.__ENV && window.__ENV[name]) {
+        return window.__ENV[name];
+    }
+
+    console.warn(`Environment variable ${name} not found`);
+    return null;
+}
+
+// Export environment variables
+export const GROK_API_KEY = getEnvVar('GROK_API_KEY');

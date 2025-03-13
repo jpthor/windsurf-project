@@ -24,9 +24,10 @@ git clone <repository-url>
 cd wifi-qr-generator
 ```
 
-2. Copy `js/config.template.js` to `js/config.js` and add your Grok API key:
-```javascript
-export const GROK_API_KEY = 'your_api_key_here';
+2. Create a `.env` file in the root directory:
+```bash
+# Copy from .env.example and add your API key
+GROK_API_KEY=your_api_key_here
 ```
 
 3. Start a local server:
@@ -78,8 +79,10 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 │   ├── ocr.js         # OCR and AI processing
 │   ├── credentials.js  # Credential management
 │   ├── qrcode.js      # QR code generation
-│   └── config.js       # Configuration (gitignored)
-└── .env               # Environment variables (gitignored)
+│   ├── config.js      # Environment variable handling (gitignored)
+│   └── load-env.js    # Environment variable loader
+├── .env               # Environment variables (gitignored)
+└── .env.example       # Example environment file
 ```
 
 ## Dependencies
@@ -91,9 +94,11 @@ All dependencies are loaded via CDN:
 
 ## Security
 
-- API keys are stored in `.env` and not committed to version control
+- API keys are stored in `.env` (local) and Vercel environment variables (production)
+- `.env` and `config.js` are in .gitignore to prevent accidental commits
 - Credentials are processed locally in the browser
 - No server-side storage of sensitive information
+- HTTPS required for all deployments
 
 ## Browser Support
 

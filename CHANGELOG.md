@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.9] - 2025-03-13
+### Security
+- Removed hardcoded API key from codebase
+- Added proper environment variable handling
+- Improved local development security with .env file
+- Added .env.example for better developer onboarding
+
 ## [1.4.8] - 2025-03-13
 ### Added
 - Improved WiFi joining on iOS using direct WiFi URL scheme
