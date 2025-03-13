@@ -1,5 +1,5 @@
 {
-  "buildCommand": "sed -i \"s/{{REACT_APP_GROK_API_KEY}}/$REACT_APP_GROK_API_KEY/g\" js/vercel-env.js && echo 'Environment variables injected'",
+  "buildCommand": "./build.sh",
   "outputDirectory": ".",
   "framework": null,
   "rewrites": [
