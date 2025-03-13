@@ -5,6 +5,7 @@ import { performOCR } from './ocr.js';
 import { checkGrokStatus } from './grok.js';
 import { saveCredentials, loadCredentials } from './credentials.js';
 import { generateQRCode, initWiFiHandlers } from './qrcode.js';
+import { VERSION } from './version.js';
 
 // Handle review screen navigation
 elements.backToReviewButton.addEventListener('click', () => {
@@ -41,6 +42,13 @@ async function initApp() {
     initWiFiHandlers(); // Initialize WiFi functionality
     loadCredentials();
     await checkGrokStatus();
+
+    // Display version
+    const versionElement = document.getElementById('version');
+    if (versionElement) {
+        versionElement.textContent = `v${VERSION}`;
+    }
+
     console.log('App initialized');
 }
 
