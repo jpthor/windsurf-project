@@ -10,20 +10,28 @@ function getEnvVar(name) {
         isProcessDefined: typeof process !== 'undefined',
         hasProcessEnv: typeof process !== 'undefined' && process.env !== undefined,
         hasWindowEnv: typeof window !== 'undefined' && window.__ENV !== undefined,
+        hasVercelEnv: typeof window !== 'undefined' && window.ENV_VARS !== undefined,
         availableProcessEnvKeys: typeof process !== 'undefined' && process.env ? Object.keys(process.env).filter(key => key.startsWith('REACT_APP_')).join(', ') : 'none',
-        availableWindowEnvKeys: typeof window !== 'undefined' && window.__ENV ? Object.keys(window.__ENV).join(', ') : 'none'
+        availableWindowEnvKeys: typeof window !== 'undefined' && window.__ENV ? Object.keys(window.__ENV).join(', ') : 'none',
+        availableVercelEnvKeys: typeof window !== 'undefined' && window.ENV_VARS ? Object.keys(window.ENV_VARS).join(', ') : 'none'
     });
 
-    // For Vercel deployment
-    if (typeof process !== 'undefined' && process.env && process.env[name]) {
-        console.log(`Found ${name} in process.env`);
-        return process.env[name];
+    // For Vercel production deployment
+    if (typeof window !== 'undefined' && window.ENV_VARS && window.ENV_VARS[name]) {
+        console.log(`Found ${name} in window.ENV_VARS`);
+        return window.ENV_VARS[name];
     }
 
     // For local development
     if (typeof window !== 'undefined' && window.__ENV && window.__ENV[name]) {
         console.log(`Found ${name} in window.__ENV`);
         return window.__ENV[name];
+    }
+
+    // Fallback to process.env (though unlikely to work in browser)
+    if (typeof process !== 'undefined' && process.env && process.env[name]) {
+        console.log(`Found ${name} in process.env`);
+        return process.env[name];
     }
 
     console.warn(`Environment variable ${name} not found. This will cause API calls to fail.`);
