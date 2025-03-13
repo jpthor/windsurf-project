@@ -57,19 +57,28 @@
             border: 0;
         }
 
-        .fixed-status-bar {
+        .fullscreen-wrapper {
             position: fixed;
-            top: env(safe-area-inset-top, 10px);
-            right: env(safe-area-inset-right, 10px);
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
             z-index: 9999;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px 15px;
+        }
+
+        .fixed-status-bar {
+            position: absolute;
+            top: max(env(safe-area-inset-top, 16px), 16px);
+            right: max(env(safe-area-inset-right, 16px), 16px);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
             border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             backdrop-filter: blur(8px);
             color: #333;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            margin: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
         }
 
         .api-status {
@@ -236,10 +245,12 @@
 <body>
     <div class="app">
         <!-- Fixed Status Bar -->
-        <div class="fixed-status-bar">
-            <div class="api-status">
-                <span id="grok-status-text">Grok</span>
-                <div id="grok-status-light" class="status-light"></div>
+        <div class="fullscreen-wrapper">
+            <div class="fixed-status-bar">
+                <div class="api-status">
+                    <span id="grok-status-text">Grok</span>
+                    <div id="grok-status-light" class="status-light"></div>
+                </div>
             </div>
         </div>
 
