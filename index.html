@@ -114,6 +114,64 @@
             text-decoration: underline;
         }
 
+        /* Screen layout improvements */
+        .screen {
+            padding-top: 80px; /* Increased space for fixed status bar */
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .card {
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: -3.5rem;
+            left: 1rem;
+            z-index: 10;
+        }
+
+        /* Header improvements */
+        .header, .review-header {
+            text-align: center;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 3rem; /* Space for back button */
+        }
+
+        .header h1, .review-header h2 {
+            margin: 0;
+            padding: 1rem 0;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Modal improvements */
+        .modal-content {
+            margin: 20px;
+            padding: 2rem;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .modal-buttons {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 4rem; /* Increased gap between buttons */
+        }
+
+        .modal-buttons button {
+            min-width: 100px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
         .button-container {
             display: flex;
             gap: 20px;
@@ -187,7 +245,7 @@
         <!-- Version Info -->
         <div class="version-info">
             <p>Made with <a href="https://windsurf.ai" target="_blank" rel="noopener">windsurf.ai</a></p>
-            <p>Version: 1.4.6 <span id="grok-model-info"></span></p>
+            <p>Version: 1.4.7 <span id="grok-model-info"></span></p>
         </div>
 
         <!-- Home Screen -->
@@ -289,8 +347,8 @@
                 <h3>WiFi QR Code</h3>
                 <div id="qr-code-container" class="qr-code-container"></div>
                 <div class="modal-buttons">
-                    <button id="save-qr" class="button primary-button">Save to Photos</button>
-                    <button id="join-wifi" class="button secondary-button">Join Network</button>
+                    <button id="save-qr" class="button primary-button">Save</button>
+                    <button id="join-wifi" class="button secondary-button">Join</button>
                 </div>
             </div>
         </div>

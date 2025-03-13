@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.7] - 2025-03-13
+### Added
+- Detailed processing status messages during OCR
+- Step-by-step feedback during image analysis
+- Better error messages and progress indicators
+
 ## [1.4.6] - 2025-03-12
 ### Added
 - One-click WiFi network joining functionality

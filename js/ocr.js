@@ -4,6 +4,11 @@ import { extractWifiCredentials, GROK_API_KEY } from './grok.js';
 
 export let recognizedText = '';
 
+// Update status message in the OCR text area
+function updateStatus(message) {
+    elements.ocrText.textContent = `${message}\n\nPlease wait while we process your image...`;
+}
+
 export async function performOCR() {
     if (!currentFile) {
         console.error('No file selected');
@@ -11,26 +16,37 @@ export async function performOCR() {
     }
     
     console.log('Starting OCR process for file:', currentFile.name);
-    elements.ocrText.textContent = 'Processing...';
+    updateStatus('Preparing image for processing...');
     elements.networkName.value = '';
     elements.networkPassword.value = '';
     
     try {
+        // Initialize OCR worker
+        updateStatus('Initializing OCR engine...');
         console.log('Creating Tesseract worker...');
         const worker = await Tesseract.createWorker('eng', 1);
+        
+        // Load and initialize worker
+        updateStatus('Loading OCR models...');
         await worker.load();
         await worker.loadLanguage('eng');
         await worker.initialize('eng');
         
+        // Start text recognition
+        updateStatus('Reading text from image...');
         console.log('Worker initialized, starting recognition...');
         const { data } = await worker.recognize(currentFile);
         console.log('Recognition completed, text:', data.text);
         
+        // Store recognized text
         recognizedText = data.text;
-        elements.ocrText.textContent = recognizedText;
+        updateStatus('Analyzing text with AI...');
         
         // Extract WiFi credentials using Grok API
         await extractWifiCredentials(recognizedText);
+        
+        // Show final text
+        elements.ocrText.textContent = recognizedText;
         
         console.log('Terminating worker...');
         await worker.terminate();

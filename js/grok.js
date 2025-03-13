@@ -70,6 +70,8 @@ export async function extractWifiCredentials(text) {
     // If Grok is connected, try it first
     if (isGrokConnected) {
         try {
+            // Update status
+            elements.ocrText.textContent = 'Sending to Grok AI for analysis...';
             console.log('Processing text with Grok:', text);
             const requestBody = {
                 messages: [
@@ -101,6 +103,7 @@ export async function extractWifiCredentials(text) {
                 throw new Error(`API request failed (${response.status})`);
             }
 
+            elements.ocrText.textContent = 'Processing Grok response...';
             const data = await response.json();
             console.log('Full API response:', data);
 
@@ -119,6 +122,8 @@ export async function extractWifiCredentials(text) {
             elements.networkName.value = credentials.network;
             elements.networkPassword.value = credentials.password;
 
+            // Show the extracted text with a success message
+            elements.ocrText.textContent = `Found text:\n\n${text}\n\nSuccessfully extracted WiFi credentials!`;
             console.log('Successfully extracted credentials with Grok:', credentials);
             return credentials;
 
@@ -129,8 +134,13 @@ export async function extractWifiCredentials(text) {
 
     // Try regex extraction as fallback
     console.log('Using regex extraction');
+    elements.ocrText.textContent = 'Analyzing text with backup method...';
     const regexCredentials = extractCredentialsWithRegex(text);
     elements.networkName.value = regexCredentials.network || '';
     elements.networkPassword.value = regexCredentials.password || '';
+    
+    // Show final results
+    elements.ocrText.textContent = `Found text:\n\n${text}\n\n${regexCredentials.network ? 'Successfully extracted WiFi credentials!' : 'Could not find WiFi credentials in the text.'}`;
+
     return regexCredentials;
 }
