@@ -7,25 +7,38 @@
  */
 export async function joinWiFiNetwork(ssid, password) {
     try {
-        // Show network details in a user-friendly way
-        const message = `Network Name: ${ssid}\nPassword: ${password}\n\nTo join this network:\n1. Open your WiFi settings (opening now...)\n2. Select "${ssid}"\n3. Enter the password shown above`;
-        
-        // Show the details first
-        alert(message);
-        
-        // Then open WiFi settings
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const isAndroid = /Android/.test(navigator.userAgent);
         
         if (isIOS) {
-            // Use iOS settings URL scheme
-            window.location.href = 'App-Prefs:root=WIFI';
+            // Create WiFi configuration URL
+            // Format: WIFI:T:WPA;S:<ssid>;P:<password>;;
+            const wifiConfig = `WIFI:T:WPA;S:${ssid};P:${password};;`;
+            const wifiURL = encodeURI(wifiConfig);
+            
+            // First try the direct WiFi URL scheme
+            window.location.href = wifiURL;
+            
+            // If that doesn't work (after a short delay), try the settings URL
+            setTimeout(() => {
+                // Try the modern settings URL first
+                window.location.href = 'prefs:root=WIFI';
+                
+                // If that doesn't work, show manual instructions after another delay
+                setTimeout(() => {
+                    const message = `Network Name: ${ssid}\nPassword: ${password}\n\nTo join this network:\n1. Open your WiFi settings\n2. Select "${ssid}"\n3. Enter the password shown above`;
+                    alert(message);
+                }, 1000);
+            }, 1000);
         } else if (isAndroid) {
-            // Use Android intent
-            window.location.href = 'intent://settings/wifi#Intent;scheme=android-settings;end';
+            // Use Android intent with WiFi configuration
+            const wifiConfig = `WIFI:T:WPA;S:${ssid};P:${password};;`;
+            window.location.href = `intent://settings/wifi#Intent;scheme=android-settings;package=com.android.settings;S.wifi_ssid=${encodeURIComponent(ssid)};end`;
         } else {
-            // For desktop, we've already shown the instructions
-            console.log('Desktop browser detected, instructions already shown');
+            // For desktop, show instructions
+            const message = `Network Name: ${ssid}\nPassword: ${password}\n\nTo join this network:\n1. Open your WiFi settings\n2. Select "${ssid}"\n3. Enter the password shown above`;
+            alert(message);
+            console.log('Desktop browser detected, showing manual instructions');
         }
         
         return true;

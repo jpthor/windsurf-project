@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.8] - 2025-03-13
+### Added
+- Improved WiFi joining on iOS using direct WiFi URL scheme
+- Fallback mechanism for older iOS versions
+- Better error handling for WiFi connections
+
 ## [1.4.7] - 2025-03-13
 ### Added
 - Detailed processing status messages during OCR
