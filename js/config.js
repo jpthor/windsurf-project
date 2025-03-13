@@ -2,6 +2,8 @@
  * Get environment variables in a way that works in both:
  * 1. Local development (using .env file)
  * 2. Vercel deployment (using environment variables)
+ *
+ * Note: For React apps, all client-side environment variables must be prefixed with REACT_APP_
  */
 function getEnvVar(name) {
     // For Vercel deployment
@@ -19,4 +21,4 @@ function getEnvVar(name) {
 }
 
 // Export environment variables
-export const GROK_API_KEY = getEnvVar('GROK_API_KEY');
+export const GROK_API_KEY = getEnvVar('REACT_APP_GROK_API_KEY');

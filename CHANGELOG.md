@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0] - 2025-03-13
+### Changed
+- Updated environment variables to use REACT_APP_ prefix
+- Modified config.js to handle React environment variables
+- Updated documentation for React environment setup
+
 ## [1.4.9] - 2025-03-13
 ### Security
 - Removed hardcoded API key from codebase
