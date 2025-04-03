@@ -1,13 +1,30 @@
 # Environment variables and sensitive configuration
 .env
+config.js
 
 # Dependency directories
 node_modules/
+
+# Build output
+dist/
+build/
+.vercel/
+.cache/
 
 # Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+logs/
+*.log
+
+# Test coverage
+coverage/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-*
 
 # OS generated files
 .DS_Store

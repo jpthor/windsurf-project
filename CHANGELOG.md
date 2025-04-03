@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.1] - 2025-04-03
+### Added
+- Comprehensive npm build scripts for development and production
+- Modern bundling and optimization with esbuild
+- CSS optimization with PostCSS and cssnano
+- Automated deployment to Vercel with a single command
+- Development watch mode for real-time updates
+- Bundle analysis and performance tools
+- Better environment separation for development and production
+
 ## [1.7.0] - 2025-04-03
 ### Changed
 - Optimized Grok API usage with single check per page load
