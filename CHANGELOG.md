@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0] - 2025-04-03
+### Added
+- Manual Entry button for direct WiFi credential input
+- Enhanced QR code display with clear WiFi credentials
+- Stylish border around QR codes for better visibility
+- Streamlined QR code modal with focus on essential information
+
 ## [1.5.0] - 2025-03-13
 ### Changed
 - Updated environment variables to use REACT_APP_ prefix

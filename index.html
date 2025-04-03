@@ -168,6 +168,71 @@
             max-width: 90%;
             width: 400px;
         }
+        
+        /* WiFi Credentials Display */
+        .wifi-credentials-display {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+            width: 100%;
+        }
+        
+        .wifi-name {
+            font-size: 1.1rem;
+            color: #000;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .password-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .wifi-password {
+            font-size: 1rem;
+            color: #000;
+            margin: 0;
+            font-weight: normal;
+        }
+        
+        /* QR Code Container Styling */
+        .qr-code-container {
+            padding: 1.5rem;
+            border: 2px dashed rgba(78, 84, 200, 0.4);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            backdrop-filter: blur(8px);
+            max-width: 300px;
+        }
+        
+        #qr-canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .qr-code-container::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%234e54c8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>') center no-repeat;
+            opacity: 0.6;
+        }
 
         .modal-buttons {
             margin-top: 2.5rem;
@@ -257,7 +322,7 @@
         <!-- Version Info -->
         <div class="version-info">
             <p>Made with <a href="https://windsurf.ai" target="_blank" rel="noopener">windsurf.ai</a></p>
-            <p>Version: 1.5.0 <span id="grok-model-info"></span></p>
+            <p>Version: 1.6.0 <span id="grok-model-info"></span></p>
         </div>
 
         <!-- Home Screen -->
@@ -283,6 +348,14 @@
                                 <path d="M21 15l-5-5L5 21"/>
                             </svg>
                             <span>Gallery</span>
+                        </button>
+                        <button id="manual-entry-button" class="action-button manual-entry-button">
+                            <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                            </svg>
+                            <span>Manual Entry</span>
                         </button>
                     </div>
                     <!-- Camera input with environment capture for rear camera -->
@@ -352,15 +425,45 @@
             </main>
         </div>
 
+        <!-- Manual Entry Screen -->
+        <div id="manual-entry-screen" class="screen">
+            <header class="review-header">
+                <button id="back-from-manual" class="back-button">&larr;</button>
+                <h2>Manual WiFi Entry</h2>
+            </header>
+            <main class="content">
+                <div class="card">
+                    <h3>Enter WiFi Credentials</h3>
+                    <div class="credential-fields">
+                        <div class="input-group">
+                            <label for="manual-network-name">Network</label>
+                            <input type="text" id="manual-network-name" placeholder="Network name">
+                        </div>
+                        <div class="input-group">
+                            <label for="manual-network-password">Password</label>
+                            <input type="text" id="manual-network-password" placeholder="Password">
+                        </div>
+                    </div>
+                    
+                    <button id="generate-qr-button" class="button primary-button">Generate QR Code</button>
+                </div>
+            </main>
+        </div>
+
         <!-- QR Code Modal -->
         <div id="qr-modal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
                 <h3>WiFi QR Code</h3>
-                <div id="qr-code-container" class="qr-code-container"></div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p style="font-size: 16px; color: black; font-weight: bold;" id="qr-wifi-name"></p>
+                    <p style="font-size: 16px; color: black;" id="qr-wifi-password"></p>
+                </div>
+                <div id="qr-code-container" class="qr-code-container">
+                    <div id="qr-canvas-container"></div>
+                </div>
                 <div class="modal-buttons">
                     <button id="save-qr" class="button primary-button">Save</button>
-                    <button id="join-wifi" class="button secondary-button">Join</button>
                 </div>
             </div>
         </div>
