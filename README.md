@@ -1,6 +1,6 @@
 # WiFi QR Code Generator
 
-A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing.
+A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing. Last updated: April 3, 2025.
 
 ![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)
 [![Made with Windsurf](https://img.shields.io/badge/Made%20with-windsurf.ai-4e54c8.svg)](https://windsurf.ai)
