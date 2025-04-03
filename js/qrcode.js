@@ -47,11 +47,36 @@ export function generateQRCode() {
     currentNetwork = network;
     currentPassword = password;
     
+    // Update WiFi credentials display in modal with improved visibility
+    const qrWifiName = document.getElementById('qr-wifi-name');
+    const qrWifiPassword = document.getElementById('qr-wifi-password');
+    
+    console.log('WiFi Credentials to display:', { network, password });
+    console.log('DOM elements found:', { qrWifiName, qrWifiPassword });
+    
+    // Ensure the WiFi name and password are set with clear text
+    if (qrWifiName) {
+        qrWifiName.textContent = 'Network: ' + network;
+        console.log('Set WiFi name display');
+    } else {
+        console.error('qr-wifi-name element not found');
+    }
+    
+    if (qrWifiPassword) {
+        qrWifiPassword.textContent = 'Password: ' + password;
+        console.log('Set WiFi password display');
+    } else {
+        console.error('qr-wifi-password element not found');
+    }
+    
     // Generate WiFi QR code
     const wifiString = `WIFI:S:${network};T:WPA;P:${password};;`;
     
-    // Clear previous QR code
-    elements.qrCodeContainer.innerHTML = '';
+    // Clear previous QR code container
+    const qrCanvasContainer = document.getElementById('qr-canvas-container');
+    if (qrCanvasContainer) {
+        qrCanvasContainer.innerHTML = '';
+    }
     
     // Generate new QR code
     QRCode.toCanvas(
@@ -71,7 +96,16 @@ export function generateQRCode() {
                 return;
             }
             currentQRCanvas = canvas;
-            elements.qrCodeContainer.appendChild(canvas);
+            
+            // Add the canvas to the dedicated container
+            const qrCanvasContainer = document.getElementById('qr-canvas-container');
+            if (qrCanvasContainer) {
+                qrCanvasContainer.appendChild(canvas);
+            } else {
+                console.error('QR canvas container not found');
+                elements.qrCodeContainer.appendChild(canvas);
+            }
+            
             elements.qrModal.style.display = 'flex';
         }
     );
