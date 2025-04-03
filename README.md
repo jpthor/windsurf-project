@@ -2,7 +2,7 @@
 
 A web-based tool that extracts WiFi credentials from images and generates QR codes for easy network sharing. Last updated: April 3, 2025.
 
-![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.7.1-blue.svg)
 [![Made with Windsurf](https://img.shields.io/badge/Made%20with-windsurf.ai-4e54c8.svg)](https://windsurf.ai)
 
 ## Features
@@ -26,25 +26,49 @@ git clone <repository-url>
 cd wifi-qr-generator
 ```
 
-2. Create a `.env` file in the root directory:
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file in the root directory:
 ```bash
 # Copy from .env.example and add your API key
 GROK_API_KEY=your_api_key_here
 ```
 
-3. Start a local server:
+4. Start the development server with live reload:
 ```bash
-python3 -m http.server 8080
+npm run dev
 ```
 
-4. Open `http://localhost:8080` in your browser
+5. Open `http://localhost:8080` in your browser
+
+### Production Build
+
+Create an optimized production build:
+```bash
+npm run build
+```
+
+Preview the production build locally:
+```bash
+npm run preview:dist
+```
 
 ### Vercel Deployment
 
+#### Option 1: One-Command Deployment
+
+Deploy directly from your local machine with a single command:
+```bash
+npm run deploy
+```
+
+#### Option 2: GitHub Integration
+
 1. Push your code to GitHub
-
 2. Create a new project in Vercel and connect it to your GitHub repository
-
 3. Configure environment variables in Vercel:
    - Go to Project Settings → Environment Variables
    - Add `GROK_API_KEY` with your API key value
@@ -73,26 +97,54 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 ```
 ├── index.html           # Main HTML file
 ├── js/
-│   ├── main.js         # Application entry point
-│   ├── init.js         # Initialization logic
-│   ├── dom.js          # DOM element references
-│   ├── navigation.js   # Screen navigation
-│   ├── fileHandling.js # File input handling
-│   ├── ocr.js         # OCR and AI processing
-│   ├── credentials.js  # Credential management
-│   ├── qrcode.js      # QR code generation
-│   ├── config.js      # Environment variable handling (gitignored)
-│   └── load-env.js    # Environment variable loader
-├── .env               # Environment variables (gitignored)
-└── .env.example       # Example environment file
+│   ├── main.js          # Application entry point
+│   ├── init.js          # Initialization logic
+│   ├── dom.js           # DOM element references
+│   ├── navigation.js    # Screen navigation
+│   ├── fileHandling.js  # File input handling
+│   ├── ocr.js           # OCR and AI processing
+│   ├── credentials.js   # Credential management
+│   ├── qrcode.js        # QR code generation
+│   ├── config.js        # Environment variable handling (gitignored)
+│   └── load-env.js      # Environment variable loader
+├── icons/              # Application icons and assets
+├── dist/               # Production build output (generated)
+├── .env                # Environment variables (gitignored)
+├── .env.example        # Example environment file
+├── package.json        # Project dependencies and scripts
+└── manifest.json       # PWA manifest
 ```
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start the development server |
+| `npm run dev` | Start development server with watch mode and live reload |
+| `npm run build` | Create optimized production build in `dist` folder |
+| `npm run preview:dist` | Preview the production build locally |
+| `npm run lint` | Run ESLint to check for code quality issues |
+| `npm run lint:fix` | Automatically fix ESLint issues when possible |
+| `npm run generate-icons` | Generate all required app icons |
+| `npm run deploy` | Build and deploy to Vercel in one command |
+| `npm run analyze` | Analyze the bundle size with source-map-explorer |
 
 ## Dependencies
 
-All dependencies are loaded via CDN:
-- [Tesseract.js](https://cdn.jsdelivr.net/npm/tesseract.js) - OCR processing
+### Runtime Dependencies
+- [Tesseract.js](https://tesseract.projectnaptha.com/) - OCR processing
 - [Grok API](https://x.ai) - AI-powered text analysis
-- [QRCode.js](https://cdn.jsdelivr.net/npm/qrcode) - QR code generation
+- [QRCode.js](https://github.com/soldair/node-qrcode) - QR code generation
+- [dotenv](https://github.com/motdotla/dotenv) - Environment variable management
+
+### Development Dependencies
+- [esbuild](https://esbuild.github.io/) - Fast JavaScript bundler
+- [PostCSS](https://postcss.org/) with cssnano - CSS optimization
+- [live-server](https://github.com/tapio/live-server) - Development server with live reload
+- [npm-watch](https://github.com/M-Zuber/npm-watch) - File watcher for development
+- [html-minifier](https://github.com/kangax/html-minifier) - HTML optimization
+- [ESLint](https://eslint.org/) - Code quality and standards
+- [Vercel CLI](https://vercel.com/cli) - Deployment tool
 
 ## Security
 
