@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.2] - 2025-04-03
+### Changed
+- Updated version across all project files for consistency
+- Improved build system documentation
+- Refined ESLint configuration for better code quality
+
 ## [1.7.1] - 2025-04-03
 ### Added
 - Comprehensive npm build scripts for development and production
