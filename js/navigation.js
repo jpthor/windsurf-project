@@ -9,6 +9,7 @@ export function showScreen(screenId) {
     elements.homeScreen.classList.remove('active');
     elements.reviewScreen.classList.remove('active');
     elements.finalScreen.classList.remove('active');
+    elements.manualEntryScreen.classList.remove('active');
     
     // Show the requested screen
     const screen = document.getElementById(screenId);

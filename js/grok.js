@@ -6,13 +6,60 @@ export { GROK_API_KEY };
 export let isGrokConnected = false;
 export const GROK_MODEL = 'grok-2-latest';
 
-// Check Grok API connection status and set up periodic checks
+// Backoff configuration
+const BACKOFF_CONFIG = {
+    initialDelay: 30000,     // 30 seconds initial delay
+    maxDelay: 3600000,       // Max delay of 1 hour
+    factor: 2,               // Exponential factor
+    jitter: 0.1,             // 10% jitter to avoid thundering herd
+    retryCount: 0            // Current retry count
+};
+
+// Track if we've checked this session
+let hasCheckedThisSession = false;
+let backoffTimer = null;
+
+// Check Grok API connection status with exponential backoff
 export async function checkGrokStatus() {
-    // Initial check
-    await performGrokStatusCheck();
+    // Only do the initial check if we haven't checked this session
+    if (!hasCheckedThisSession) {
+        console.log('Performing initial Grok status check');
+        hasCheckedThisSession = true;
+        await performGrokStatusCheck();
+    }
+}
+
+// Schedule the next check with exponential backoff
+function scheduleNextCheck(wasSuccessful) {
+    // Clear any existing timer
+    if (backoffTimer) {
+        clearTimeout(backoffTimer);
+    }
     
-    // Set up periodic checks every 30 seconds
-    setInterval(performGrokStatusCheck, 30000);
+    if (wasSuccessful) {
+        // If successful, reset retry count
+        BACKOFF_CONFIG.retryCount = 0;
+        // No need to schedule another check if successful
+        return;
+    }
+    
+    // Calculate delay with exponential backoff
+    const delay = Math.min(
+        BACKOFF_CONFIG.initialDelay * Math.pow(BACKOFF_CONFIG.factor, BACKOFF_CONFIG.retryCount),
+        BACKOFF_CONFIG.maxDelay
+    );
+    
+    // Add jitter to avoid thundering herd problem
+    const jitterAmount = delay * BACKOFF_CONFIG.jitter;
+    const jitteredDelay = delay + (Math.random() * 2 - 1) * jitterAmount;
+    
+    console.log(`Scheduling next Grok check with ${Math.round(jitteredDelay/1000)}s delay (retry #${BACKOFF_CONFIG.retryCount + 1})`);
+    
+    // Schedule next check
+    backoffTimer = setTimeout(async () => {
+        BACKOFF_CONFIG.retryCount++;
+        await performGrokStatusCheck();
+    }, jitteredDelay);
 }
 
 // Actual status check implementation
@@ -72,6 +119,9 @@ async function performGrokStatusCheck() {
             modelInfo.textContent = isConnected ? `Using ${GROK_MODEL}` : '';
         }
         
+        // Schedule next check based on success
+        scheduleNextCheck(true);
+        
         return isConnected;
     } catch (error) {
         console.error('Grok API connection check failed:', {
@@ -88,6 +138,9 @@ async function performGrokStatusCheck() {
         if (modelInfo) {
             modelInfo.textContent = '';
         }
+        
+        // Schedule next check with backoff
+        scheduleNextCheck(false);
         
         return false;
     }
