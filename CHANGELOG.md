@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.0] - 2025-04-03
+### Changed
+- Optimized Grok API usage with single check per page load
+- Implemented exponential backoff for retries on connection failures
+- Added jitter to avoid connection bursts
+- Reduced API credits consumption while maintaining status accuracy
+
+### Fixed
+- Manual entry button click handler conflict resolved
+
 ## [1.6.0] - 2025-04-03
 ### Added
 - Manual Entry button for direct WiFi credential input
